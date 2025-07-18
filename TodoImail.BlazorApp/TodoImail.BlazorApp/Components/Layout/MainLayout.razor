@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+
+<Menu @rendermode="RenderMode.InteractiveWebAssembly" />    
+
+
+<main class="container mt-2 mb-2">
+@Body
+</main>
+
+<footer class="text-bg-dark">
+    <div class="container pt-2 pb-2">
+        <Footer @rendermode="RenderMode.InteractiveWebAssembly" />
+    </div>
+</footer>
+
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

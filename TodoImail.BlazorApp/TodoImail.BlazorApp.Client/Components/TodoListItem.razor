@@ -1,0 +1,32 @@
+﻿<div class="card mb-2">
+    <div class="card-body">
+        <span class="badge text-white float-end" style="background-color: @Todo.Category?.Color">@Todo.Category?.ShortLabel</span>
+        <i role="button" @onclick="Toggle" class="far fa-3x fa-@(Todo.IsDone ? "check-" : "")circle float-start me-2"></i>
+        <div class="fs-3 card-title">@Todo.Label</div>
+    </div>
+    @if (TodoDetail is not null) {
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Echéance <strong>@TodoDetail.DueDate.ToLongDateString()</strong></li>
+            <li class="list-group-item">
+                Coordonnées
+                @if (TodoDetail.WithCoords) {
+                    <strong>@TodoDetail.Latitude / @TodoDetail.Longitude</strong>
+                } else {
+                    <i class="fa fa-link-slash"></i>
+                }
+            </li>
+            <li class="list-group-item">
+            Supprimable <input checked="@TodoDetail.IsDeletable" class="form-check-input" type="checkbox" disabled>
+            </li>
+        </ul>
+    }
+    <div class="card-footer">
+        <div class="d-flex align-items-center justify-content-between">
+            <span class="badge text-bg-dark">@Todo.Status</span>
+            <div class="btn-group">
+                <button @onclick="LoadDetails" class="btn btn-outline-dark"><i class="fa fa-eye@(TodoDetail is not null?"-slash":"")"></i></button>
+                <button @onclick="Remove" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

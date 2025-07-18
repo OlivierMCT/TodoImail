@@ -1,0 +1,92 @@
+@TodoImail.WebApi_HostAddress = https://localhost:7039
+
+GET {{TodoImail.WebApi_HostAddress}}/category/
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/test
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/1
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/11
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/apéro
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/blabla
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/todo/
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/todo/133
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/todo/1000
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/todo?filter=nager
+Accept: application/json
+
+###
+
+GET {{TodoImail.WebApi_HostAddress}}/category/2/todo
+Accept: application/json
+
+###
+DELETE {{TodoImail.WebApi_HostAddress}}/todo/7
+Accept: application/json
+
+###
+
+POST {{TodoImail.WebApi_HostAddress}}/todo
+Accept: application/json
+content-type: application/json
+
+{
+  "label": "coucou",
+  "due": "2024-10-10",
+  "lat": 222
+}
+###
+
+PUT {{TodoImail.WebApi_HostAddress}}/todo/6
+Accept: application/json
+content-type: application/json
+
+{
+  "label": "coucou",
+  "due": "2024-10-10",
+  "done": true
+}
+###
+
+Patch {{TodoImail.WebApi_HostAddress}}/todo/1
+Accept: application/json
+content-type: application/json
+
+{
+  "done": false  
+}
+###
+

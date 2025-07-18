@@ -1,0 +1,59 @@
+﻿@page "/mes-taches"
+@*@rendermode RenderMode.InteractiveWebAssembly*@
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: true))
+
+<PageTitle>Mes Tâches</PageTitle>
+<h1 class="display-1">
+    Mes trucs à faire
+    <span class="badge rounded-pill bg-info fs-5">@Todos.Count</span>
+</h1>
+
+@if (IsLoading) {
+<section class="text-center m-5">
+    <div class="spinner-grow text-secondary me-2" style="width: 5rem; height: 5rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info me-2" style="width: 5rem; height: 5rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary me-2" style="width: 5rem; height: 5rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</section>
+} else {
+<section class="d-flex">
+    <ul class="list-group">
+        @foreach (var category in Categories) {
+            bool isActiveCategory = IsSelectedCategory(category);
+            <li role="button" @onclick="() => ToggleSelectedCategory(category)"
+                class="list-group-item d-flex justify-content-between align-items-start @(isActiveCategory?"active":"")">
+                <div class="me-2">
+                    @category.Label
+                </div>
+                <span class="ms-1 badge rounded-pill" style="background-color: @category.Color">@category.TodosCount</span>
+            </li>
+        }
+    </ul>
+    <div class="flex-grow-1 d-flex flex-column ms-2">        
+        <div class="d-flex justify-content-between mb-2">
+            <NavLink href="/mes-taches/nouvelle" class="btn btn-info text-white">
+                <i class="fa fa-plus"></i>
+            </NavLink>
+
+            <button @onclick="Sort" class="btn btn-outline-dark @(Sorted.HasValue?"active":"")">
+                @{ string className = Sorted == false ? "fa-sort-alpha-up" : "fa-sort-alpha-down"; }
+                <i class="fa @className"></i>
+            </button>
+        </div>
+        @foreach (var todo in Todos.Where(t => !SelectedCategories.Any() || IsSelectedCategory(t.Category))) {
+           <TodoListItem @key="todo.Id" 
+                         Todo="todo" 
+                         OnToggled="Toggled"
+                         OnDeleting="Deleting"/>
+        }
+    </div>
+</section>
+}
+@code {
+
+}

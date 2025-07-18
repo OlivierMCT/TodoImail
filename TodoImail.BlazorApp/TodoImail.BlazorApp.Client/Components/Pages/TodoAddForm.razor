@@ -1,0 +1,86 @@
+﻿@page "/mes-taches/nouvelle"
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: true))
+
+<PageTitle>Ma nouvelle tâche</PageTitle>
+<NavLink href="/mes-taches" class="btn btn-secondary text-white">
+    <i class="fa fa-arrow-left"></i> retour
+</NavLink>
+
+<h1 class="display-3">
+    Mon nouveau truc à faire
+</h1>
+
+
+<EditForm @ref="TodoEditForm" Model="TodoModel" OnValidSubmit="SaveTodo" OnInvalidSubmit="() => ShowCustomeError = true">
+    <DataAnnotationsValidator />
+
+    <div class="form-floating mb-3">
+        <InputText @bind-Value="TodoModel.Label" class="form-control" placeholder="placeholder" />
+        <label>Libellé</label>
+        <ValidationMessage For="() => TodoModel.Label" class="badge text-bg-danger" />
+    </div>
+
+    <div class="mb-3">
+        <InputSelect @bind-Value="TodoModel.CategoryId" class="form-select">
+            <option value="">Catégorie</option>
+            @if (IsCategoriesLoading) {
+                <option value="" disabled>chargement en cours...</option>
+            }
+            @foreach (var category in Categories) {
+                <option value="@category.Id">@category.Label</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-floating mb-3">
+        <InputDate @bind-Value="TodoModel.DueDate" class="form-control" placeholder="placeholder" />
+        <label>Echéance</label>
+        <ValidationMessage For="() => TodoModel.DueDate" class="badge text-bg-danger" />
+    </div>
+
+    <div class="form-floating mb-3">
+        <InputNumber @bind-Value="TodoModel.Latitude"
+                     @bind-Value:after="() => NotifyFieldChanged(nameof(TodoModel.Longitude))"
+                     class="form-control" placeholder="placeholder" />
+        <label>Latitude</label>
+        <ValidationMessage For="() => TodoModel.Latitude" class="badge text-bg-danger" />
+    </div>
+
+    <div class="form-floating mb-3">
+        @*<input type="number" @bind="TodoModel.Longitude" @bind:event="oninput" @bind:after="UpdateLongitude" class="form-control" placeholder="placeholder" />*@
+        <InputNumber @bind-Value="TodoModel.Longitude"
+                     @bind-Value:after="() => NotifyFieldChanged(nameof(TodoModel.Latitude))"
+                     class="form-control" placeholder="placeholder" />
+        <label>Longitude</label>
+        <ValidationMessage For="() => TodoModel.Longitude" class="badge text-bg-danger" />
+    </div>
+
+    <div class="mb-3">
+        <button disabled="@IsSaving" class="btn btn-info text-white btn-lg">
+            <i class="fa fa-floppy-disk"></i> Valider
+        </button>
+    </div>
+
+    @if (IsSaving) {
+        <div class="alert alert-info">
+            <i class="fa fa-floppy-disk fa-beat fa-3x float-start me-3"></i>
+            Merci de <strong>patienter</strong> !
+            <br />
+            La tâche est en cours d'enregistrement.
+        </div>
+    }
+
+    @if (ShowCustomeError) {
+        <div class="alert alert-danger">
+            <i class="fa fa-warning fa-beat fa-3x float-start me-3"></i>
+            Le formulaire comporte des <strong>erreurs</strong> !
+            <br />
+            Merci de vérifier les informations saisies.
+        </div>
+    }
+
+</EditForm>
+
+@code {
+
+}
